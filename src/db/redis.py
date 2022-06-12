@@ -31,3 +31,4 @@ class RedisCashe(BaseCache):
 
     async def set(self, key: str, value: str, expire: int):
         await self.cache.set(key=key, value=value, expire=expire)
+
