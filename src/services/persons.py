@@ -2,11 +2,10 @@ from functools import lru_cache
 from typing import Optional, List
 
 from aioredis import Redis
-from elasticsearch import AsyncElasticsearch, NotFoundError
 from fastapi import Depends
 from pydantic import BaseModel
 
-from db.elastic import get_elastic
+from db.elastic import get_elastic, AsyncDataProvider
 from db.redis import get_redis
 from models.data_models import Person
 from services.tools import CacheValue, ServiceMixin
@@ -21,9 +20,9 @@ class ListCache(BaseModel):
 
 
 class PersonService(ServiceMixin):
-    def __init__(self, redis: Redis, elastic: AsyncElasticsearch):
+    def __init__(self, redis: Redis, async_data_provider: AsyncDataProvider):
         self.redis = redis
-        self.elastic = elastic
+        self.async_data_provider = async_data_provider
         self._index_name = 'persons'
 
     async def get_by_id(self, person_id: str) -> Optional[Person]:
@@ -32,43 +31,38 @@ class PersonService(ServiceMixin):
         )
         person = await self._person_from_cache(cache_key)
         if not person:
-            person = await self._get_person_from_elastic(person_id)
-            if not person:
+            person_data: dict = await self.async_data_provider.get_by_id(self._index_name, person_id)
+            if not person_data:
                 return None
+
+            person: Person = Person(**person_data)
             await self._put_person_to_cache(cache_key, person)
         return person
 
     async def get_list(
-        self, page_number: int, page_size: int
+        self
     ) -> Optional[List[Person]]:
-        doc = await self.elastic.search(
-            index=self._index_name, from_=(page_number - 1) * page_size, size=page_size
+        doc = await self.async_data_provider.get_all_data(
+            index=self._index_name,
+            sort='',
+            filter='',
         )
-        return [Person(**d["_source"]) for d in doc["hits"]["hits"]]
+        return [Person(**d) for d in doc]
 
     async def search(
-        self, page_number: int, page_size: int, query: str
+        self, query: str
     ) -> Optional[List[Person]]:
-        body = {
-            "query": {
-                "multi_match": {
-                    "query": query,
-                }
-            }
-        }
 
         cache_key = self._build_cache_key(
             [CacheValue(name='query', value=query)]
         )
         persons: List[Person] = await self._get_list_from_cache(cache_key)
         if not persons:
-            doc = await self.elastic.search(
+            doc: list[dict] = await self.async_data_provider.search(
                 index=self._index_name,
-                body=body,
-                from_=(page_number - 1) * page_size,
-                size=page_size,
+                query=query,
             )
-            persons = [Person(**d["_source"]) for d in doc["hits"]["hits"]]
+            persons = [Person(**d) for d in doc]
             await self._put_list_to_cache(cache_key, persons)
         return persons
 
@@ -83,20 +77,6 @@ class PersonService(ServiceMixin):
             Person.parse_raw(p_data) for p_data in data_list.__root__
         ]
         return persons
-
-    async def _get_list_from_elastic(self, body: dict) -> List[Person]:
-        response = self.elastic.search(
-            index="persons",
-            body=body,
-        )
-        return [Person(**d["_source"]) for d in response["hits"]["hits"]]
-
-    async def _get_person_from_elastic(self, person_id: str) -> Optional[Person]:
-        try:
-            doc = await self.elastic.get(self._index_name, person_id)
-        except NotFoundError:
-            return None
-        return Person(**doc["_source"])
 
     async def _person_from_cache(self, person_id: str) -> Optional[Person]:
         data = await self.redis.get(person_id)
@@ -119,6 +99,6 @@ class PersonService(ServiceMixin):
 @lru_cache()
 def get_person_service(
     redis: Redis = Depends(get_redis),
-    elastic: AsyncElasticsearch = Depends(get_elastic),
+    async_data_provider: AsyncDataProvider = Depends(get_elastic),
 ) -> PersonService:
-    return PersonService(redis, elastic)
+    return PersonService(redis, async_data_provider)
