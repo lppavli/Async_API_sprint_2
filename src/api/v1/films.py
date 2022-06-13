@@ -86,9 +86,13 @@ async def get_all_films(
 
     if not sort:
         sort = ""
+    else:
+        sort = sort.value
 
     if not filter:
         filter = ""
+    else:
+        filter = filter.value
 
     films = await film_service.get_all_films(sort, filter)
 
