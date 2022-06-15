@@ -30,7 +30,7 @@ async def es_client():
     await client.close()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 async def session():
     session = aiohttp.ClientSession()
     yield session
