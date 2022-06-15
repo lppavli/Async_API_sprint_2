@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     class Config:
-        env_file = '.env.local'
+        env_file = '.env'
 
 
 settings = Settings()
