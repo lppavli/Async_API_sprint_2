@@ -36,4 +36,3 @@ async def test_person_list(make_get_request, read_json_data):
     response = await make_get_request(f'/person/', params=params)
     assert len(response.body) == 12
     assert response.status == 200
-
