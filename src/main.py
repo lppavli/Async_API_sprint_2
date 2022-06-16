@@ -8,6 +8,7 @@ from fastapi.responses import ORJSONResponse
 from api.v1 import films, person, genre
 from core.config import settings
 from db import elastic, redis
+from db.redis import RedisCache
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -19,9 +20,10 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup():
-    redis.redis = await aioredis.create_redis_pool(
+    redis_client = await aioredis.create_redis_pool(
         (settings.REDIS_HOST, settings.REDIS_PORT), minsize=10, maxsize=20
     )
+    redis.redis = RedisCache(redis_client)
     elastic_client = AsyncElasticsearch(
         hosts=[f"{settings.ELASTIC_HOST}:{settings.ELASTIC_PORT}"]
     )
