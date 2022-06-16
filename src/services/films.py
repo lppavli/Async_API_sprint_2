@@ -22,15 +22,17 @@ class FilmService(ServiceMixin):
     def __init__(self, redis: Redis, async_data_provider: AsyncDataProvider):
         self.redis = redis
         self.async_data_provider = async_data_provider
-        self._index_name = 'movies'
+        self._index_name = "movies"
 
     async def get_by_id(self, film_id: str) -> Optional[Film]:
 
-        cache_key = self._build_cache_key([CacheValue(name='film_id', value=film_id)])
+        cache_key = self._build_cache_key([CacheValue(name="film_id", value=film_id)])
 
         film = await self._film_from_cache(cache_key)
         if not film:
-            film_data: Optional[dict] = await self.async_data_provider.get_by_id(self._index_name, film_id)
+            film_data: Optional[dict] = await self.async_data_provider.get_by_id(
+                self._index_name, film_id
+            )
             if not film_data:
                 return None
             film: Film = Film(**film_data)
@@ -46,8 +48,8 @@ class FilmService(ServiceMixin):
 
         cache_key = self._build_cache_key(
             [
-                CacheValue(name='sort', value=sort),
-                CacheValue(name='filter', value=filter),
+                CacheValue(name="sort", value=sort),
+                CacheValue(name="filter", value=filter),
             ]
         )
 
@@ -68,11 +70,13 @@ class FilmService(ServiceMixin):
         return films
 
     async def search(self, query: str) -> list[FilmForPerson]:
-        cache_key = self._build_cache_key([CacheValue(name='query', value=query)])
+        cache_key = self._build_cache_key([CacheValue(name="query", value=query)])
         films: list[FilmForPerson] = await self._films_from_cache(cache_key)
 
         if not films:
-            films_data: list[dict] = await self.async_data_provider.search(self._index_name, query)
+            films_data: list[dict] = await self.async_data_provider.search(
+                self._index_name, query
+            )
             films: list[FilmForPerson] = [FilmForPerson(**d) for d in films_data]
             await self._put_films_to_cache(cache_key, films)
 
@@ -98,7 +102,9 @@ class FilmService(ServiceMixin):
         return films
 
     async def _put_film_to_cache(self, cache_key: str, film: Film):
-        await self.redis.set(cache_key, film.json(), expire=FILM_CACHE_EXPIRE_IN_SECONDS)
+        await self.redis.set(
+            cache_key, film.json(), expire=FILM_CACHE_EXPIRE_IN_SECONDS
+        )
 
     async def _put_films_to_cache(self, cache_key: str, films: list[FilmForPerson]):
         data = [f.json() for f in films]
