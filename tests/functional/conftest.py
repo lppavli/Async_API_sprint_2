@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from multidict import CIMultiDictProxy
 from elasticsearch import AsyncElasticsearch
 
-SERVICE_URL = 'http://127.0.0.1:80'
+SERVICE_URL = "http://127.0.0.1:80"
 REDIS_HOST = "localhost"
 REDIS_PORT = 6379
 TEST_DATA_DIR = Path(__file__).parent.joinpath("testdata/expected_response")
@@ -23,14 +23,14 @@ class HTTPResponse:
     status: int
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 async def es_client():
-    client = AsyncElasticsearch(hosts='127.0.0.1:9200')
+    client = AsyncElasticsearch(hosts="127.0.0.1:9200")
     yield client
     await client.close()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 async def session():
     session = aiohttp.ClientSession()
     yield session
@@ -41,7 +41,9 @@ async def session():
 def make_get_request(session):
     async def inner(method: str, params: Optional[dict] = None) -> HTTPResponse:
         params = params or {}
-        url = SERVICE_URL + '/api/v1' + method  # в боевых системах старайтесь так не делать!
+        url = (
+            SERVICE_URL + "/api/v1" + method
+        )  # в боевых системах старайтесь так не делать!
         async with session.get(url, params=params) as response:
             return HTTPResponse(
                 body=await response.json(),
@@ -59,6 +61,7 @@ async def read_json_data(request):
         with jsonpath.open() as fp:
             data = json.load(fp)
         return data
+
     return inner
 
 

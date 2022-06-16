@@ -4,7 +4,6 @@ from elasticsearch import AsyncElasticsearch, NotFoundError
 
 
 class AsyncDataProvider(abc.ABC):
-
     @abc.abstractmethod
     async def search(self, index: str, query: str):
         pass
@@ -30,14 +29,7 @@ class AsyncElasticProvider(AsyncDataProvider):
         return doc["_source"]
 
     async def search(self, index: str, query: str) -> list[dict]:
-        body = {
-            "query": {
-                "multi_match": {
-                    "query": query,
-                    "fuzziness": "auto"
-                }
-            }
-        }
+        body = {"query": {"multi_match": {"query": query, "fuzziness": "auto"}}}
         return await self._search(index, body)
 
     async def get_all_data(self, index: str, sort: str, filter: str):

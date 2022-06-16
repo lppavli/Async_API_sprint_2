@@ -23,15 +23,17 @@ class PersonService(ServiceMixin):
     def __init__(self, redis: Redis, async_data_provider: AsyncDataProvider):
         self.redis = redis
         self.async_data_provider = async_data_provider
-        self._index_name = 'persons'
+        self._index_name = "persons"
 
     async def get_by_id(self, person_id: str) -> Optional[Person]:
         cache_key = self._build_cache_key(
-            [CacheValue(name='person_id', value=person_id)]
+            [CacheValue(name="person_id", value=person_id)]
         )
         person = await self._person_from_cache(cache_key)
         if not person:
-            person_data: dict = await self.async_data_provider.get_by_id(self._index_name, person_id)
+            person_data: dict = await self.async_data_provider.get_by_id(
+                self._index_name, person_id
+            )
             if not person_data:
                 return None
 
@@ -39,23 +41,17 @@ class PersonService(ServiceMixin):
             await self._put_person_to_cache(cache_key, person)
         return person
 
-    async def get_list(
-        self
-    ) -> Optional[List[Person]]:
+    async def get_list(self) -> Optional[List[Person]]:
         doc = await self.async_data_provider.get_all_data(
             index=self._index_name,
-            sort='',
-            filter='',
+            sort="",
+            filter="",
         )
         return [Person(**d) for d in doc]
 
-    async def search(
-        self, query: str
-    ) -> Optional[List[Person]]:
+    async def search(self, query: str) -> Optional[List[Person]]:
 
-        cache_key = self._build_cache_key(
-            [CacheValue(name='query', value=query)]
-        )
+        cache_key = self._build_cache_key([CacheValue(name="query", value=query)])
         persons: List[Person] = await self._get_list_from_cache(cache_key)
         if not persons:
             doc: list[dict] = await self.async_data_provider.search(
