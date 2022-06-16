@@ -23,41 +23,42 @@ class PersonService(ServiceMixin):
     def __init__(self, redis: RedisCache, async_data_provider: AsyncDataProvider):
         self.redis = redis
         self.async_data_provider = async_data_provider
-        self._index_name = 'persons'
+        self._index_name = "persons"
 
     async def get_by_id(self, person_id: str) -> Optional[Person]:
         cache_key = self._build_cache_key(
-            [CacheValue(name='person_id', value=person_id)]
+            [CacheValue(name="person_id", value=person_id)]
         )
         person = await self.redis.get(cache_key)
         if not person:
-            person_data: dict = await self.async_data_provider.get_by_id(self._index_name, person_id)
+            person_data: dict = await self.async_data_provider.get_by_id(
+                self._index_name, person_id
+            )
             if not person_data:
                 return None
 
             person: Person = Person(**person_data)
-            await self.redis.set(key=cache_key, value=person.json(), expire=PERSON_CACHE_EXPIRE_IN_SECONDS)
+            await self.redis.set(
+                key=cache_key,
+                value=person.json(),
+                expire=PERSON_CACHE_EXPIRE_IN_SECONDS,
+            )
             return person
+
         person = Person.parse_raw(person)
         return person
 
-    async def get_list(
-        self
-    ) -> Optional[List[Person]]:
+    async def get_list(self) -> Optional[List[Person]]:
         doc = await self.async_data_provider.get_all_data(
             index=self._index_name,
-            sort='',
-            filter='',
+            sort="",
+            filter="",
         )
         return [Person(**d) for d in doc]
 
-    async def search(
-        self, query: str
-    ) -> Optional[List[Person]]:
+    async def search(self, query: str) -> Optional[List[Person]]:
 
-        cache_key = self._build_cache_key(
-            [CacheValue(name='query', value=query)]
-        )
+        cache_key = self._build_cache_key([CacheValue(name="query", value=query)])
         persons = await self.redis.get(cache_key)
 
         if not persons:
@@ -68,7 +69,9 @@ class PersonService(ServiceMixin):
             persons = [Person(**d) for d in doc]
             data = [f.json() for f in persons]
             data_row = ListCache.parse_obj(data).json()
-            await self.redis.set(cache_key, data_row, expire=PERSON_CACHE_EXPIRE_IN_SECONDS)
+            await self.redis.set(
+                cache_key, data_row, expire=PERSON_CACHE_EXPIRE_IN_SECONDS
+            )
             return persons
 
         data_list: ListCache = ListCache.parse_raw(persons)

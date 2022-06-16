@@ -28,7 +28,7 @@ async def startup():
         hosts=[f"{settings.ELASTIC_HOST}:{settings.ELASTIC_PORT}"]
     )
     elastic.es = elastic.AsyncElasticProvider(elastic_client)
-    logging.info('Service up')
+    logging.info("Service up")
 
 
 @app.on_event("shutdown")

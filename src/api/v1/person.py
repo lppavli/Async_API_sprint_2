@@ -10,11 +10,7 @@ from services.persons import PersonService, get_person_service
 router = APIRouter()
 
 
-@router.get(
-    "/{person_id}",
-    response_model=PersonShort,
-    description='Описание персоны'
-)
+@router.get("/{person_id}", response_model=PersonShort, description="Описание персоны")
 async def person_details(
     person_id: str, person_service: PersonService = Depends(get_person_service)
 ) -> PersonShort:
@@ -32,7 +28,7 @@ async def person_details(
 @router.get(
     "/",
     response_model=Page[PersonShort],
-    description='Вывод всех персон',
+    description="Вывод всех персон",
 )
 async def person_list(
     person_service: PersonService = Depends(get_person_service),
@@ -48,7 +44,7 @@ async def person_list(
 @router.get(
     "/search/",
     response_model=Page[PersonShort],
-    description='Поиск по персонам',
+    description="Поиск по персонам",
 )
 async def person_search(
     query: str,
@@ -62,10 +58,7 @@ async def person_search(
     return paginate(persons_short)
 
 
-@router.get(
-    "/{person_id}/film/",
-    description='Вывод фильмов по персоне'
-)
+@router.get("/{person_id}/film/", description="Вывод фильмов по персоне")
 async def person_list_films(
     person_id: str, person_service: PersonService = Depends(get_person_service)
 ) -> Optional[List]:

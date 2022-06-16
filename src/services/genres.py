@@ -16,21 +16,23 @@ class GenreService(ServiceMixin):
     def __init__(self, redis: RedisCache, async_data_provider: AsyncDataProvider):
         self.redis = redis
         self.async_data_provider = async_data_provider
-        self._index_name = 'genres'
+        self._index_name = "genres"
 
     async def get_by_id(self, genre_id: str) -> Optional[Genre]:
 
-        cache_key = self._build_cache_key(
-            [CacheValue(name='genre_id', value=genre_id)]
-        )
+        cache_key = self._build_cache_key([CacheValue(name="genre_id", value=genre_id)])
         genre = await self.redis.get(cache_key)
 
         if not genre:
-            genre_data: Optional[dict] = await self.async_data_provider.get_by_id(self._index_name, genre_id)
+            genre_data: Optional[dict] = await self.async_data_provider.get_by_id(
+                self._index_name, genre_id
+            )
             if not genre_data:
                 return None
             genre: Genre = Genre(**genre_data)
-            await self.redis.set(key=cache_key, value=genre.json(), expire=GENRE_CACHE_EXPIRE_IN_SECONDS)
+            await self.redis.set(
+                key=cache_key, value=genre.json(), expire=GENRE_CACHE_EXPIRE_IN_SECONDS
+            )
             return genre
         genre = Genre.parse_raw(genre)
         return genre
@@ -38,8 +40,8 @@ class GenreService(ServiceMixin):
     async def get_list(self):
         data: list[dict] = await self.async_data_provider.get_all_data(
             index=self._index_name,
-            sort='',
-            filter='',
+            sort="",
+            filter="",
         )
         return [Genre(**d) for d in data]
 

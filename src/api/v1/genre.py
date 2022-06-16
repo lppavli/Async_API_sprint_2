@@ -11,8 +11,8 @@ router = APIRouter()
 
 @router.get("/{genre_id}", response_model=Genre, description="Вывод информации о жанре")
 async def genre_details(
-        genre_id: str,
-        genre_service: GenreService = Depends(get_genre_service),
+    genre_id: str,
+    genre_service: GenreService = Depends(get_genre_service),
 ) -> Genre:
     genre = await genre_service.get_by_id(genre_id)
     if not genre:

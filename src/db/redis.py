@@ -1,9 +1,7 @@
-import json
 from abc import ABC, abstractmethod
 from typing import Optional
 
 from aioredis import Redis
-from fastapi import Depends
 
 
 class BaseCache(ABC):
