@@ -1,0 +1,278 @@
+[
+  {
+    "id": "025c58cd-1b7e-43be-9ffb-8571a613579b",
+    "title": "Star Wars: Episode VI - Return of the Jedi",
+    "rating": 8.3,
+    "type": "fw_type"
+  },
+  {
+    "id": "0312ed51-8833-413f-bff5-0e139c11264a",
+    "title": "Star Wars: Episode V - The Empire Strikes Back",
+    "rating": 8.7,
+    "type": "fw_type"
+  },
+  {
+    "id": "0659e0e6-504e-4482-8aa9-f7530f36cae2",
+    "title": "Kara: A Star Wars Story",
+    "rating": 6.8,
+    "type": "fw_type"
+  },
+  {
+    "id": "07f8bdbe-5246-4dfc-8d38-85043aeb307b",
+    "title": "Star Wars: The Clone Wars",
+    "rating": 7,
+    "type": "fw_type"
+  },
+  {
+    "id": "118fd71b-93cd-4de5-95a4-e1485edad30e",
+    "title": "Rogue One: A Star Wars Story",
+    "rating": 7.8,
+    "type": "fw_type"
+  },
+  {
+    "id": "12a8279d-d851-4eb9-9d64-d690455277cc",
+    "title": "Star Wars: Episode VIII - The Last Jedi",
+    "rating": 7,
+    "type": "fw_type"
+  },
+  {
+    "id": "134989c3-3b20-4ae7-8092-3e8ad2333d59",
+    "title": "The Star Wars Holiday Special",
+    "rating": 2.1,
+    "type": "fw_type"
+  },
+  {
+    "id": "19babc93-62f5-481a-b6fe-9ebfef689cbc",
+    "title": "Star Wars: The Legacy Revealed",
+    "rating": 7.8,
+    "type": "fw_type"
+  },
+  {
+    "id": "3a28f10a-433e-431c-8e7b-cc3f90af5a41",
+    "title": "The Making of 'Star Wars'",
+    "rating": 7.5,
+    "type": "fw_type"
+  },
+  {
+    "id": "3b1d0e70-42e5-4c9b-98cf-2681c420a99b",
+    "title": "From 'Star Wars' to 'Jedi': The Making of a Saga",
+    "rating": 7.7,
+    "type": "fw_type"
+  },
+  {
+    "id": "3b914679-1f5e-4cbd-8044-d13d35d5236c",
+    "title": "Star Wars: Episode I - The Phantom Menace",
+    "rating": 6.5,
+    "type": "fw_type"
+  },
+  {
+    "id": "3ba6c11a-0db6-4144-bc9d-c7e04b817dd2",
+    "title": "The Mythology of 'Star Wars'",
+    "rating": 6.8,
+    "type": "fw_type"
+  },
+  {
+    "id": "3cb639db-cd8a-48b0-90e3-9def109a4492",
+    "title": "Star Wars: The Force Unleashed",
+    "rating": 8.2,
+    "type": "fw_type"
+  },
+  {
+    "id": "3d825f60-9fff-4dfe-b294-1a45fa1e115d",
+    "title": "Star Wars: Episode IV - A New Hope",
+    "rating": 8.6,
+    "type": "fw_type"
+  },
+  {
+    "id": "46f15353-2add-415d-9782-fa9c5b8083d5",
+    "title": "Star Wars: Episode IX - The Rise of Skywalker",
+    "rating": 6.7,
+    "type": "fw_type"
+  },
+  {
+    "id": "48495445-f04d-4d4c-9249-1faa28fc64eb",
+    "title": "Star Wars: Yoda Stories",
+    "rating": 6.6,
+    "type": "fw_type"
+  },
+  {
+    "id": "4f53452f-a402-4a76-89fd-f034eeb8d657",
+    "title": "Star Wars: Episode V - The Empire Strikes Back: Deleted Scenes",
+    "rating": 7.6,
+    "type": "fw_type"
+  },
+  {
+    "id": "516f91da-bd70-4351-ba6d-25e16b7713b7",
+    "title": "Star Wars: Episode III - Revenge of the Sith",
+    "rating": 7.5,
+    "type": "fw_type"
+  },
+  {
+    "id": "57beb3fd-b1c9-4f8a-9c06-2da13f95251c",
+    "title": "Solo: A Star Wars Story",
+    "rating": 6.9,
+    "type": "fw_type"
+  },
+  {
+    "id": "5c612da0-9c15-48db-b46e-e6c82b071a9b",
+    "title": "Star Tours",
+    "rating": 8,
+    "type": "fw_type"
+  },
+  {
+    "id": "5d62b55c-1ed5-4563-ae80-10c4baa21a36",
+    "title": "Lego Star Wars III: The Clone Wars",
+    "rating": 7.5,
+    "type": "fw_type"
+  },
+  {
+    "id": "6313d0f5-e6a6-4071-a0c2-3d737fd1d56d",
+    "title": "Lego Star Wars: The Empire Strikes Out",
+    "rating": 7.3,
+    "type": "fw_type"
+  },
+  {
+    "id": "64aa7000-698f-4332-b52f-9469e4d44ee1",
+    "title": "Star Wars: Shadows of the Empire",
+    "rating": 8.2,
+    "type": "fw_type"
+  },
+  {
+    "id": "6cb927b3-4760-46c8-9002-ff4a47d57a4a",
+    "title": "Star Wars: Rebel Assault",
+    "rating": 6.8,
+    "type": "fw_type"
+  },
+  {
+    "id": "73ecd1e6-6326-405a-b51b-69008f383b72",
+    "title": "Lego Star Wars: The Complete Saga",
+    "rating": 8.5,
+    "type": "fw_type"
+  },
+  {
+    "id": "75609cee-bc87-493d-8c1f-32c7e8ccc368",
+    "title": "Star Wars Legends: Legacy of the Force",
+    "rating": 7.1,
+    "type": "fw_type"
+  },
+  {
+    "id": "88faa02d-f26f-40a1-9cc6-8045ed08d51e",
+    "title": "Star Wars: Episode III - Revenge of the Sith",
+    "rating": 7.3,
+    "type": "fw_type"
+  },
+  {
+    "id": "92dcddff-a70e-497c-92dc-0da12d1d528a",
+    "title": "Exile: A Star Wars Story",
+    "rating": 5.8,
+    "type": "fw_type"
+  },
+  {
+    "id": "943946ed-4a2b-4c71-8e0b-a58a11bd1323",
+    "title": "Star Wars: Evolution of the Lightsaber Duel",
+    "rating": 6.8,
+    "type": "fw_type"
+  },
+  {
+    "id": "983e0b41-dd17-4fd6-b4e7-771f975fdc19",
+    "title": "Star Wars: The Force Unleashed",
+    "rating": 7.9,
+    "type": "fw_type"
+  },
+  {
+    "id": "991d143e-1342-4f7c-abf0-a9ede3abba20",
+    "title": "Star Wars: The Force Unleashed - Ultimate Sith Edition",
+    "rating": 8.1,
+    "type": "fw_type"
+  },
+  {
+    "id": "a8f6bd5b-036a-4d79-b952-3c7b5aa3ea83",
+    "title": "Star Wars: Hoshino",
+    "rating": 7.4,
+    "type": "fw_type"
+  },
+  {
+    "id": "b503ced6-fff1-493a-ad41-73449b55ffee",
+    "title": "Star Wars: The Clone Wars",
+    "rating": 8.2,
+    "type": "fw_type"
+  },
+  {
+    "id": "c35dc09c-8ace-46be-8941-7e50b768ec33",
+    "title": "Star Wars",
+    "rating": 6.6,
+    "type": "fw_type"
+  },
+  {
+    "id": "c4c5e3de-c0c9-4091-b242-ceb331004dfd",
+    "title": "Star Wars: Episode II - Attack of the Clones",
+    "rating": 6.5,
+    "type": "fw_type"
+  },
+  {
+    "id": "c8f57f93-b02a-40d4-ba55-9600cceddd7e",
+    "title": "Star Tours: The Adventures Continue",
+    "rating": 8.3,
+    "type": "fw_type"
+  },
+  {
+    "id": "cd19b384-babd-4b0c-ba0a-5c272bcf0238",
+    "title": "Star Wars: The Lesser Evil",
+    "rating": 6.5,
+    "type": "fw_type"
+  },
+  {
+    "id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394",
+    "title": "Star Wars: Episode VII - The Force Awakens",
+    "rating": 7.9,
+    "type": "fw_type"
+  },
+  {
+    "id": "d6a7409f-87cd-49d7-8803-951a7352c2ce",
+    "title": "Star Wars: Obi-Wan",
+    "rating": 6.2,
+    "type": "fw_type"
+  },
+  {
+    "id": "daae47e4-cbd0-4ffd-a150-55201b357d5b",
+    "title": "Lego Star Wars: The Video Game",
+    "rating": 8.2,
+    "type": "fw_type"
+  },
+  {
+    "id": "dc2dbf5d-de5d-4153-a049-51ba44f15e04",
+    "title": "Empire of Dreams: The Story of the 'Star Wars' Trilogy",
+    "rating": 8.3,
+    "type": "fw_type"
+  },
+  {
+    "id": "dcab54f1-6958-4699-b3f5-2fb92c185b33",
+    "title": "Star Wars: The Force Unleashed II",
+    "rating": 7.1,
+    "type": "fw_type"
+  },
+  {
+    "id": "e5a21648-59b1-4672-ac3b-867bcd64b6ea",
+    "title": "Star Wars Jedi: Fallen Order",
+    "rating": 8.8,
+    "type": "fw_type"
+  },
+  {
+    "id": "e99620fb-11bb-481b-8702-a14efa6bb0ef",
+    "title": "Lego Star Wars II: The Original Trilogy",
+    "rating": 8.4,
+    "type": "fw_type"
+  },
+  {
+    "id": "f241a62c-2157-432a-bbeb-9c579c8bc18b",
+    "title": "Star Wars: Episode IV: A New Hope - Deleted Scenes",
+    "rating": 8.4,
+    "type": "fw_type"
+  },
+  {
+    "id": "f553752e-71c7-4ea0-b780-41408516d0f4",
+    "title": "Star Wars Empire at War: Forces of Corruption",
+    "rating": 8.1,
+    "type": "fw_type"
+  }
+]

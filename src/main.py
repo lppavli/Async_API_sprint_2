@@ -22,9 +22,10 @@ async def startup():
     redis.redis = await aioredis.create_redis_pool(
         (settings.REDIS_HOST, settings.REDIS_PORT), minsize=10, maxsize=20
     )
-    elastic.es = AsyncElasticsearch(
+    elastic_client = AsyncElasticsearch(
         hosts=[f"{settings.ELASTIC_HOST}:{settings.ELASTIC_PORT}"]
     )
+    elastic.es = elastic.AsyncElasticProvider(elastic_client)
     logging.info('Service up')
 
 
