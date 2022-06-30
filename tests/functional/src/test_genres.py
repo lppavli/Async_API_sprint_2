@@ -11,8 +11,16 @@ async def test_genre_detailed(make_get_request, read_json_data):
 
 
 @pytest.mark.asyncio
+async def test_get_genre(make_get_request):
+    response = await make_get_request('/genre/unknown')
+    assert response.status == 404
+    assert response.body['detail'] == 'genre not found'
+
+
+@pytest.mark.asyncio
 async def test_genre_list(make_get_request, read_json_data):
-    params = {"page_number": 3, "page_size": 10}
+    params = {"page": 1, "size": 10}
     response = await make_get_request(f"/genre/", params=params)
-    assert len(response.body) == 6
-    assert response.status == 200
+    assert response.body['total'] == 10
+    assert response.body['page'] == 1
+    assert response.body['size'] == 10

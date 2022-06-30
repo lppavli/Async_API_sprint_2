@@ -1,0 +1,47 @@
+{
+  "id": "fe12e428-be67-4bb9-9629-4ab1385dc8be",
+  "title": "Crescent Star",
+  "rating": 7.9,
+  "type": "movie",
+  "description": "In 1944, the Germans began rounding up the Jews of Rhodes. The Turkish Consul General, Selahattin Ulkumen, interceded on behalf of those Jewish who were Turkish nationals. By his efforts, 42 Jewish families were set free from the deportation to Auschwitz-Birkenau. In reprisal, German planes bombed the consulate building and Ulkumen's house, killing his staff and pregnant wife. His sacrifice made consul Selahattin Ulkumen the first non-Christian to be declared a Righteous Gentile by Yad Vashem, Israel's Holocaust memorial.",
+  "genres": [
+    {
+      "id": "1cacff68-643e-4ddd-8f57-84b62538081a",
+      "name": "Drama"
+    },
+    {
+      "id": "a886d0ec-c3f3-4b16-b973-dedcf5bfa395",
+      "name": "Short"
+    }
+  ],
+  "directors": [
+    {
+      "id": "1ae39512-10fa-44ca-b239-55108d6644ef",
+      "name": "Turgut Turk Adiguzel"
+    }
+  ],
+  "writers": [
+    {
+      "id": "1ae39512-10fa-44ca-b239-55108d6644ef",
+      "name": "Turgut Turk Adiguzel"
+    }
+  ],
+  "actors": [
+    {
+      "id": "04773c6c-a6dd-4cad-8543-cd52230eafaf",
+      "name": "Saro Solis"
+    },
+    {
+      "id": "4d454cee-c41f-4414-aafa-251cddf8ec4f",
+      "name": "Darrell Geer"
+    },
+    {
+      "id": "53b36264-0517-4ad2-8382-dc8391925527",
+      "name": "Olga Christodoulou"
+    },
+    {
+      "id": "84db9dee-d10f-4d6a-875b-346c49c4d5ed",
+      "name": "Michael Bond"
+    }
+  ]
+}
