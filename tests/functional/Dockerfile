@@ -7,8 +7,11 @@ COPY requirements.txt .
 
 RUN pip install -U setuptools pip
 COPY . .
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt \
+    && chmod +x ./utils/redis_elastic_waiter.sh
 
 ENV PYTHONPATH=${PYTHONPATH}:/functional
+
+ENTRYPOINT ["/utils/redis_elastic_waiter.sh"]
 
 CMD ["pytest", "./src/"]

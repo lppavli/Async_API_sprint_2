@@ -9,7 +9,13 @@ from services.genres import GenreService, get_genre_service
 router = APIRouter()
 
 
-@router.get("/{genre_id}", response_model=Genre, description="Вывод информации о жанре")
+@router.get(
+    "/{genre_id}",
+    response_model=Genre,
+    summary="Информация о жанре",
+    description="Подробная информация по id жанра",
+    response_description="Название и описание жанра",
+)
 async def genre_details(
     genre_id: str,
     genre_service: GenreService = Depends(get_genre_service),

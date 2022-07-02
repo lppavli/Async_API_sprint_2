@@ -14,7 +14,11 @@ router = APIRouter()
 
 
 @router.get(
-    "/search", response_model=Page[FilmForPerson], description="Поиск по фильмам"
+    "/search",
+    response_model=Page[FilmForPerson],
+    description="Полнотекстовый поиск по произведениям",
+    summary="Поиск кинопроизведений",
+    response_description="Название и рейтинг фильма",
 )
 async def films_search(
     query: str,
@@ -28,7 +32,14 @@ async def films_search(
     return paginate(films)
 
 
-@router.get("/{film_id}", response_model=Film, description="Вывод информации о фильме")
+@router.get(
+    "/{film_id}",
+    response_model=Film,
+    description="Подробная информация по id фильма",
+    summary="Информация о фильме",
+    response_description="Название, жанры и рейтинг фильма, актёры,"
+    "режиссёры и сценаристы",
+)
 async def film_details(
     film_id: str, film_service: FilmService = Depends(get_film_service)
 ) -> Film:
@@ -77,7 +88,14 @@ class FilterGenres(EnumStrMixin):
     news = "News"
 
 
-@router.get("/", response_model=Page[FilmForPerson], description="Вывод всех фильмов")
+@router.get(
+    "/",
+    response_model=Page[FilmForPerson],
+    summary="Список фильмов",
+    description="Список фильмов, отсортированных по рейтингу и жанру, если они переданы",
+    response_description="Список фильмов, параметры сортировки, "
+    "количество фильмов на странице, номер страницы",
+)
 async def get_all_films(
     sort: Optional[SortTypes] = None,
     filter: Optional[FilterGenres] = None,
