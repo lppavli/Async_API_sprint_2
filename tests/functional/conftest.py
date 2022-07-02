@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from multidict import CIMultiDictProxy
 from elasticsearch import AsyncElasticsearch
 
-SERVICE_URL = "http://127.0.0.1:80"
+SERVICE_URL = "http://127.0.0.1:8000"
 REDIS_HOST = "localhost"
 REDIS_PORT = 6379
 TEST_DATA_DIR = Path(__file__).parent.joinpath("testdata/expected_response")

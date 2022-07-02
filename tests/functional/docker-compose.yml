@@ -1,0 +1,56 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13
+    expose:
+      - "5432"
+    volumes:
+      - $HOME/postgresql/data:/var/lib/postgresql/data
+    environment:
+      - "POSTGRES_PASSWORD"
+      - "POSTGRES_USER"
+      - "POSTGRES_DB"
+
+  redis:
+    image: redis:7.0-alpine
+    expose:
+      - "6379"
+
+  etl:
+    build:
+      context: ../../ETL/
+    depends_on:
+      - elastic
+      - postgres
+    environment:
+      - "DB_PASSWORD"
+      - "DB_USER"
+      - "DB_NAME"
+      - "DB_HOST"
+      - "DB_PORT"
+      - "ELASTIC_HOST"
+      - "ELASTIC_PORT"
+
+  elastic:
+    image: elasticsearch:7.17.1
+    expose:
+      - "9200"
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+
+  async_api:
+    build:
+      context: ../../src/
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    depends_on:
+      - redis
+      - elastic
+      - etl
+
+
+
