@@ -11,10 +11,12 @@ from db import elastic, redis
 from db.redis import RedisCache
 
 app = FastAPI(
-    title=settings.PROJECT_NAME,
+    title="Read-only API для онлайн-кинотеатра",
     docs_url="/api/openapi",
     openapi_url="/api/openapi.json",
     default_response_class=ORJSONResponse,
+    description="Информация о фильмах, жанрах и людях, участвовавших в создании произведения",
+    version="1.0.0",
 )
 
 

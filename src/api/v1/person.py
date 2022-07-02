@@ -10,7 +10,13 @@ from services.persons import PersonService, get_person_service
 router = APIRouter()
 
 
-@router.get("/{person_id}", response_model=PersonShort, description="Описание персоны")
+@router.get(
+    "/{person_id}",
+    response_model=PersonShort,
+    description="Подробное описание по id персоны",
+    summary="Информация о персоне",
+    response_description="ФИО персоны и фильмы, где она участвовала",
+)
 async def person_details(
     person_id: str, person_service: PersonService = Depends(get_person_service)
 ) -> PersonShort:
@@ -29,6 +35,7 @@ async def person_details(
     "/",
     response_model=Page[PersonShort],
     description="Вывод всех персон",
+    summary="Информация о персонах",
 )
 async def person_list(
     person_service: PersonService = Depends(get_person_service),
@@ -44,7 +51,9 @@ async def person_list(
 @router.get(
     "/search/",
     response_model=Page[PersonShort],
-    description="Поиск по персонам",
+    summary="Поиск по персонам",
+    description="Полнотекстовый поиск по персонам",
+    response_description="ФИО персоны и фильмы, в котором она приняла участие",
 )
 async def person_search(
     query: str,
@@ -58,7 +67,12 @@ async def person_search(
     return paginate(persons_short)
 
 
-@router.get("/{person_id}/film/", description="Вывод фильмов по персоне")
+@router.get(
+    "/{person_id}/film/",
+    summary="Информация о фильмах, где участвовала персона",
+    description="Информация о фильмах, где участвовала персона",
+    response_description="Список фильмов, где приняла участие персона",
+)
 async def person_list_films(
     person_id: str, person_service: PersonService = Depends(get_person_service)
 ) -> Optional[List]:
