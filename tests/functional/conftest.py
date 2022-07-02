@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 
 import aiohttp
-import aioredis
 import pytest
 
 from typing import Optional
@@ -10,9 +9,8 @@ from dataclasses import dataclass
 from multidict import CIMultiDictProxy
 from elasticsearch import AsyncElasticsearch
 
-SERVICE_URL = "http://127.0.0.1:8000"
-REDIS_HOST = "localhost"
-REDIS_PORT = 6379
+from settings import settings
+
 TEST_DATA_DIR = Path(__file__).parent.joinpath("testdata/expected_response")
 
 
@@ -25,7 +23,9 @@ class HTTPResponse:
 
 @pytest.fixture(scope="session", autouse=True)
 async def es_client():
-    client = AsyncElasticsearch(hosts="127.0.0.1:9200")
+    client = AsyncElasticsearch(
+        hosts=f"{settings.ELASTIC_HOST}:{settings.ELASTIC_PORT}"
+    )
     yield client
     await client.close()
 
@@ -41,9 +41,7 @@ async def session():
 def make_get_request(session):
     async def inner(method: str, params: Optional[dict] = None) -> HTTPResponse:
         params = params or {}
-        url = (
-            SERVICE_URL + "/api/v1" + method
-        )  # в боевых системах старайтесь так не делать!
+        url = settings.SERVICE_URL + "/api/v1" + method
         async with session.get(url, params=params) as response:
             return HTTPResponse(
                 body=await response.json(),
@@ -63,18 +61,3 @@ async def read_json_data(request):
         return data
 
     return inner
-
-
-# @pytest.mark.asyncio
-# async def test_search_detailed(es_client, make_get_request):
-#     # Заполнение данных для теста
-#     await es_client.bulk(...)
-#
-#     # Выполнение запроса
-#     response = await make_get_request('/search', {'search': 'Star Wars'})
-#
-#     # Проверка результата
-#     assert response.status == 200
-#     assert len(response.body) == 1
-#
-#     assert response.body == expected

@@ -9,4 +9,6 @@ RUN pip install -U setuptools pip
 COPY . .
 RUN pip install -r requirements.txt
 
+ENV PYTHONPATH=${PYTHONPATH}:/functional
+
 CMD ["pytest", "./src/"]
