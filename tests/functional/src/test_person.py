@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import pytest
 
 
@@ -7,7 +9,7 @@ async def test_person_detailed(make_get_request, read_json_data):
     data = await read_json_data("person_detail.json")
     response = await make_get_request(f"/person/{person_id}", params={})
     assert response.body == data
-    assert response.status == 200
+    assert response.status == HTTPStatus.OK
 
 
 @pytest.mark.asyncio
@@ -16,7 +18,7 @@ async def test_person_films(make_get_request, read_json_data):
     data = await read_json_data("person_films.json")
     response = await make_get_request(f"/person/{person_id}/film/", params={})
     assert response.body == data
-    assert response.status == 200
+    assert response.status == HTTPStatus.OK
 
 
 @pytest.mark.asyncio
@@ -33,11 +35,11 @@ async def test_person_list(make_get_request, read_json_data):
     params = {"page_number": 1, "page_size": 10}
     response = await make_get_request(f"/person/", params=params)
     assert len(response.body["items"]) == 10
-    assert response.status == 200
+    assert response.status == HTTPStatus.OK
 
 
 @pytest.mark.asyncio
 async def test_get_person(make_get_request):
     response = await make_get_request("/person/unknown")
-    assert response.status == 404
+    assert response.status == HTTPStatus.NOT_FOUND
     assert response.body["detail"] == "person not found"

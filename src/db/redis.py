@@ -32,5 +32,5 @@ redis: Optional[BaseCache] = None
 
 
 # Функция понадобится при внедрении зависимостей
-async def get_redis() -> BaseCache:
+async def get_redis() -> Redis:
     return redis

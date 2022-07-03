@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import pytest
 
 
@@ -16,13 +18,13 @@ async def test_film_detailed(make_get_request, read_json_data):
     data = await read_json_data("film_detail.json")
     response = await make_get_request(f"/films/{film_id}", params={})
     assert response.body == data
-    assert response.status == 200
+    assert response.status == HTTPStatus.OK
 
 
 @pytest.mark.asyncio
 async def test_get_film(make_get_request):
     response = await make_get_request("/films/unknown")
-    assert response.status == 404
+    assert response.status == HTTPStatus.NOT_FOUND
     assert response.body["detail"] == "film not found"
 
 

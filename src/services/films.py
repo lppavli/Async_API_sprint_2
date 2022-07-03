@@ -67,7 +67,7 @@ class FilmService(ServiceMixin):
                 sort=sort,
                 filter=filter,
             )
-            films: list[FilmForPerson] = [FilmForPerson(**d) for d in films_data]
+            films = [FilmForPerson(**d) for d in films_data]
             data = [f.json() for f in films]
             data_row = ListCache.parse_obj(data).json()
             await self.redis.set(
@@ -76,7 +76,7 @@ class FilmService(ServiceMixin):
             return films
 
         data_list: ListCache = ListCache.parse_raw(films)
-        films: list[FilmForPerson] = [
+        films = [
             FilmForPerson.parse_raw(film_data) for film_data in data_list.__root__
         ]
         return films
@@ -96,8 +96,8 @@ class FilmService(ServiceMixin):
             )
             return films
 
-        data_list: ListCache = ListCache.parse_raw(films)
-        films: list[FilmForPerson] = [
+        data_list = ListCache.parse_raw(films)
+        films = [
             FilmForPerson.parse_raw(film_data) for film_data in data_list.__root__
         ]
         return films
