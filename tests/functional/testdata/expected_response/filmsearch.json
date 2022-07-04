@@ -1,0 +1,20 @@
+ [
+    {
+      "id": "5fcc9125-7f11-41ad-8b52-179db5b89e08",
+      "title": "Star Wars: Extintion",
+      "rating": 6.9,
+      "type": "movie"
+    },
+    {
+      "id": "c241874f-53d3-411a-8894-37c19d8bf010",
+      "title": "Star Wars SC 38 Reimagined",
+      "rating": 9.5,
+      "type": "movie"
+    },
+    {
+      "id": "140844e9-221f-4e89-838c-fac4f8ef2a9f",
+      "title": "Hedy Lamarr: Secrets of a Hollywood Star",
+      "rating": 6.7,
+      "type": "movie"
+    }
+  ]

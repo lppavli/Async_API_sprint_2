@@ -10,5 +10,5 @@ COPY . .
 RUN pip install -r requirements.txt
 
 ENV PYTHONPATH=${PYTHONPATH}:/functional
-
+#CMD ["python3", "./src/load_data_for_test.py"]
 CMD ["pytest", "./src/"]
