@@ -3,8 +3,8 @@ from http import HTTPStatus
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_pagination import add_pagination, Page, paginate
 
-from models.data_models import Genre
-from services.genres import GenreService, get_genre_service
+from src.models.data_models import Genre
+from src.services.genres import GenreService, get_genre_service
 
 router = APIRouter()
 

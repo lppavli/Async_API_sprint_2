@@ -3,10 +3,10 @@ from typing import Optional
 
 from fastapi import Depends
 
-from db.elastic import get_elastic, AsyncDataProvider
-from db.redis import get_redis, RedisCache, BaseCache
-from models.data_models import Genre
-from services.tools import CacheValue, ServiceMixin
+from src.db.elastic import get_elastic, AsyncDataProvider
+from src.db.redis import get_redis, RedisCache, BaseCache
+from src.models.data_models import Genre
+from src.services.tools import CacheValue, ServiceMixin
 
 
 GENRE_CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 минут

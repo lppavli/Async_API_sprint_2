@@ -4,8 +4,8 @@ from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_pagination import Page, paginate, add_pagination
 
-from models.data_models import PersonShort, FilmId
-from services.persons import PersonService, get_person_service
+from src.models.data_models import PersonShort, FilmId
+from src.services.persons import PersonService, get_person_service
 
 router = APIRouter()
 

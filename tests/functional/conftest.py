@@ -11,10 +11,10 @@ from dataclasses import dataclass
 from multidict import CIMultiDictProxy
 from elasticsearch import AsyncElasticsearch
 
-from settings import settings
-from src.load_data_for_test import load_data_for_test
-from testdata.data_to_elastic import movies, genres, persons, data_for_elastic
-from testdata.indexes import movies_index, persons_index, genres_index
+from tests.functional.testdata.data_to_elastic import data_for_elastic
+from tests.functional.settings import settings
+
+from tests.functional.testdata.indexes import movies_index, persons_index, genres_index
 
 TEST_DATA_DIR = Path(__file__).parent.joinpath("testdata/expected_response")
 
@@ -76,15 +76,15 @@ async def read_json_data(request):
     return inner
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 async def create_index(es_client):
-    await es_client.indices.create(index='genres', body=genres_index)
-    await es_client.indices.create(index='persons', body=persons_index)
-    await es_client.indices.create(index='movies', body=movies_index)
+    await es_client.indices.create(index="genres", body=genres_index)
+    await es_client.indices.create(index="persons", body=persons_index)
+    await es_client.indices.create(index="movies", body=movies_index)
     await es_client.bulk(body=data_for_elastic())
     time.sleep(1)
     yield
-    await es_client.indices.delete(index='_all')
+    await es_client.indices.delete(index="_all")
     # await es_client.indices.delete(index='_all')
     # # await es_client.indices.delete(index='_all')
     # await es_client.indices.create(index='genres', body=genres_index)
@@ -94,4 +94,3 @@ async def create_index(es_client):
     # for index, data in index_data.items():
     #     for d in data:
     #         await es_client.index(index=index, id=d['id'], body=d, doc_type='_doc')
-

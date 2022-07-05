@@ -11,6 +11,7 @@ RUN pip install -U setuptools pip
 RUN pip install -r requirements.txt
 
 COPY . /app
+COPY ../.tests/ /app
 
 EXPOSE 8000
 

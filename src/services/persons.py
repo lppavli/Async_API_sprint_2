@@ -5,10 +5,10 @@ from aioredis import Redis
 from fastapi import Depends
 from pydantic import BaseModel
 
-from db.elastic import get_elastic, AsyncDataProvider
-from db.redis import get_redis, RedisCache
-from models.data_models import Person
-from services.tools import CacheValue, ServiceMixin
+from src.db.elastic import get_elastic, AsyncDataProvider
+from src.db.redis import get_redis, RedisCache
+from src.models.data_models import Person
+from src.services.tools import CacheValue, ServiceMixin
 
 
 PERSON_CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 минут

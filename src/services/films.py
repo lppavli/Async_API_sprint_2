@@ -4,10 +4,10 @@ from typing import Optional
 from aioredis import Redis
 from fastapi import Depends
 
-from db.elastic import get_elastic, AsyncDataProvider
-from db.redis import get_redis, RedisCache
-from models.data_models import Film, FilmForPerson
-from services.tools import CacheValue, ServiceMixin
+from src.db.elastic import get_elastic, AsyncDataProvider
+from src.db.redis import get_redis, RedisCache
+from src.models.data_models import Film, FilmForPerson
+from src.services.tools import CacheValue, ServiceMixin
 
 from pydantic import BaseModel
 
@@ -67,7 +67,7 @@ class FilmService(ServiceMixin):
                 sort=sort,
                 filter=filter,
             )
-            films: list[FilmForPerson] = [FilmForPerson(**d) for d in films_data]
+            films = [FilmForPerson(**d) for d in films_data]
             data = [f.json() for f in films]
             data_row = ListCache.parse_obj(data).json()
             await self.redis.set(
@@ -75,10 +75,8 @@ class FilmService(ServiceMixin):
             )
             return films
 
-        data_list: ListCache = ListCache.parse_raw(films)
-        films: list[FilmForPerson] = [
-            FilmForPerson.parse_raw(film_data) for film_data in data_list.__root__
-        ]
+        data_list = ListCache.parse_raw(films)
+        films = [FilmForPerson.parse_raw(film_data) for film_data in data_list.__root__]
         return films
 
     async def search(self, query: str) -> list[FilmForPerson]:
@@ -97,9 +95,7 @@ class FilmService(ServiceMixin):
             return films
 
         data_list: ListCache = ListCache.parse_raw(films)
-        films: list[FilmForPerson] = [
-            FilmForPerson.parse_raw(film_data) for film_data in data_list.__root__
-        ]
+        films = [FilmForPerson.parse_raw(film_data) for film_data in data_list.__root__]
         return films
 
 
