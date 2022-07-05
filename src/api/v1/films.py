@@ -4,8 +4,8 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from models.data_models import Film, FilmForPerson
-from services.films import FilmService, get_film_service
+from src.models.data_models import Film, FilmForPerson
+from src.services.films import FilmService, get_film_service
 
 from fastapi_pagination import Page, add_pagination, paginate
 

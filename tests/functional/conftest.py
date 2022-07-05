@@ -1,4 +1,6 @@
+import asyncio
 import json
+import time
 from pathlib import Path
 
 import aiohttp
@@ -9,7 +11,10 @@ from dataclasses import dataclass
 from multidict import CIMultiDictProxy
 from elasticsearch import AsyncElasticsearch
 
-from settings import settings
+from tests.functional.testdata.data_to_elastic import data_for_elastic
+from tests.functional.settings import settings
+
+from tests.functional.testdata.indexes import movies_index, persons_index, genres_index
 
 TEST_DATA_DIR = Path(__file__).parent.joinpath("testdata/expected_response")
 
@@ -30,7 +35,15 @@ async def es_client():
     await client.close()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
+def event_loop():
+    """Create an instance of the default event loop for each test case."""
+    loop = asyncio.get_event_loop_policy().new_event_loop()
+    yield loop
+    loop.close()
+
+
+@pytest.fixture(scope="session")
 async def session():
     session = aiohttp.ClientSession()
     yield session
@@ -61,3 +74,23 @@ async def read_json_data(request):
         return data
 
     return inner
+
+
+@pytest.fixture(scope="session")
+async def create_index(es_client):
+    await es_client.indices.create(index="genres", body=genres_index)
+    await es_client.indices.create(index="persons", body=persons_index)
+    await es_client.indices.create(index="movies", body=movies_index)
+    await es_client.bulk(body=data_for_elastic())
+    time.sleep(1)
+    yield
+    await es_client.indices.delete(index="_all")
+    # await es_client.indices.delete(index='_all')
+    # # await es_client.indices.delete(index='_all')
+    # await es_client.indices.create(index='genres', body=genres_index)
+    # await es_client.indices.create(index='persons', body=persons_index)
+    # await es_client.indices.create(index='movies', body=movies_index)
+    # index_data = {'movies': movies, 'genres': genres, 'persons': persons}
+    # for index, data in index_data.items():
+    #     for d in data:
+    #         await es_client.index(index=index, id=d['id'], body=d, doc_type='_doc')

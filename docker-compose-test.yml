@@ -13,39 +13,26 @@ services:
 
   redis:
     image: redis:7.0-alpine
+    ports:
+      - "6379:6379"
     expose:
       - "6379"
 
-  etl:
-    build:
-      context: ./ETL/
-    depends_on:
-      - elastic
-      - postgres
-    environment:
-      - "DB_PASSWORD"
-      - "DB_USER"
-      - "DB_NAME"
-      - "DB_HOST"
-      - "DB_PORT"
-      - "ELASTIC_HOST"
-      - "ELASTIC_PORT"
-    restart: always
-
   elastic:
     image: elasticsearch:7.17.1
+    ports:
+      - "9200:9200"
     expose:
       - "9200"
     environment:
       - "discovery.type=single-node"
       - "xpack.security.enabled=false"
       - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
-    volumes:
-      - elasticdata:/usr/share/elasticsearch/data
 
   async_api:
     build:
-      context: ./src/
+      context: ./
+    image: async-api-image
     ports:
       - "8000:8000"
     expose:
@@ -53,17 +40,22 @@ services:
     depends_on:
       - redis
       - elastic
-      - etl
 
   tests:
-    build:
-      context: ./tests/functional/
+    # build:
+      # context: ./tests/functional/
+    image: async-api-image
     network_mode: "host"
+    environment:
+      - PYTHONPATH=/app
+    entrypoint: >
+      sh -c "pip install -r ./tests/functional/requirements.txt
+      && python3 ./tests/functional/utils/wait_for_es.py
+      && python3 ./tests/functional/utils/wait_for_redis.py
+      && pytest ./tests/functional/src"
+    
+
     depends_on:
       - redis
       - elastic
-      - etl
       - async_api
-
-volumes:
-  elasticdata:

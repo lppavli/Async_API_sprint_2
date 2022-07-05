@@ -5,10 +5,10 @@ from elasticsearch import AsyncElasticsearch
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
-from api.v1 import films, person, genre
-from core.config import settings
-from db import elastic, redis
-from db.redis import RedisCache
+from src.api.v1 import films, person, genre
+from src.core.config import settings
+from src.db import elastic, redis
+from src.db.redis import RedisCache
 
 app = FastAPI(
     title="Read-only API для онлайн-кинотеатра",

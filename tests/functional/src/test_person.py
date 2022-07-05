@@ -2,40 +2,32 @@ from http import HTTPStatus
 
 import pytest
 
+from tests.functional.testdata.data_to_elastic import persons
+
 
 @pytest.mark.asyncio
-async def test_person_detailed(make_get_request, read_json_data):
-    person_id = "a5a8f573-3cee-4ccc-8a2b-91cb9f55250a"
-    data = await read_json_data("person_detail.json")
-    response = await make_get_request(f"/person/{person_id}", params={})
-    assert response.body == data
+async def test_person_list(create_index, make_get_request, read_json_data):
+    params = {"page_number": 1, "page_size": 50}
+    response = await make_get_request(f"/person/", params=params)
+    data = await read_json_data("personlist.json")
     assert response.status == HTTPStatus.OK
-
-
-@pytest.mark.asyncio
-async def test_person_films(make_get_request, read_json_data):
-    person_id = "a5a8f573-3cee-4ccc-8a2b-91cb9f55250a"
-    data = await read_json_data("person_films.json")
-    response = await make_get_request(f"/person/{person_id}/film/", params={})
-    assert response.body == data
-    assert response.status == HTTPStatus.OK
-
-
-@pytest.mark.asyncio
-async def test_person_search(make_get_request, read_json_data):
-    params = {"query": "mario", "page": 1, "size": 50}
-    response = await make_get_request(f"/person/search/?", params=params)
-    assert response.body["total"] == 10
+    assert response.body["items"] == data
+    assert response.body["total"] == 3
     assert response.body["page"] == 1
     assert response.body["size"] == 50
 
 
 @pytest.mark.asyncio
-async def test_person_list(make_get_request, read_json_data):
-    params = {"page_number": 1, "page_size": 10}
-    response = await make_get_request(f"/person/", params=params)
-    assert len(response.body["items"]) == 10
+async def test_person_detailed(make_get_request, read_json_data):
+    data = persons[0]
+    person_id = data["id"]
+    response = await make_get_request(f"/person/{person_id}", params={})
     assert response.status == HTTPStatus.OK
+    assert response.body["id"] == data["id"]
+    assert response.body["name"] == data["name"]
+    assert [i["id"] for i in data["films"]] == [
+        i["id"] for i in response.body["films_ids"]
+    ]
 
 
 @pytest.mark.asyncio
@@ -43,3 +35,15 @@ async def test_get_person(make_get_request):
     response = await make_get_request("/person/unknown")
     assert response.status == HTTPStatus.NOT_FOUND
     assert response.body["detail"] == "person not found"
+
+
+@pytest.mark.asyncio
+async def test_person_search(make_get_request, read_json_data):
+    params = {"query": "Sarah", "page": 1, "size": 50}
+    response = await make_get_request(f"/person/search/?", params=params)
+    assert response.status == HTTPStatus.OK
+    data = await read_json_data("personsearch.json")
+    assert response.body["items"] == data
+    assert response.body["total"] == 1
+    assert response.body["page"] == 1
+    assert response.body["size"] == 50
