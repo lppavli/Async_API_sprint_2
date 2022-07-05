@@ -42,8 +42,6 @@ services:
       - elastic
 
   tests:
-    # build:
-      # context: ./tests/functional/
     image: async-api-image
     network_mode: "host"
     environment:
