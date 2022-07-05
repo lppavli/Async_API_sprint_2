@@ -77,6 +77,7 @@ class FilmService(ServiceMixin):
 
         data_list = ListCache.parse_raw(films)
         films = [FilmForPerson.parse_raw(film_data) for film_data in data_list.__root__]
+
         return films
 
     async def search(self, query: str) -> list[FilmForPerson]:

@@ -1,4 +1,4 @@
-## Проект Асинхронное API (5 спринт)
+# Проект Асинхронное API (5 спринт)
 
 https://github.com/lppavli/Async_API_sprint_2
 ## Используемые технологии
@@ -30,14 +30,14 @@ ELASTIC_PORT=port
 ~~~
 - Собрать приложение, используя команду docker-compose build
 - Запустить, используя команду docker-compose up
-## Тестирование
-# В контейнере
+# Тестирование
+## В контейнере
 - Собрать контейнер для тестов можно командой  docker-compose -f docker-compose-test.yml up -d --build
-# Локально
+## Локально
 - перейти в папку с тестами: cd tests/functional
 - установить окружение pip install -r requirements.txt
 - запустить тесты pytest src
-## Использование
-# Документация доступна по адресу 
+# Использование
+## Документация доступна по адресу 
 - http://localhost/api/openapi (в режиме тестов)
 - http://localhost:8000/api/openapi (при запуске через nginx)

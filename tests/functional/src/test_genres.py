@@ -28,9 +28,9 @@ async def test_genre_detailed(create_index, make_get_request, read_json_data):
     assert response.body["description"] == data["description"]
 
 
+
 @pytest.mark.asyncio
 async def test_get_genre(make_get_request):
     response = await make_get_request("/genre/unknown")
-    assert response.status == HTTPStatus.OK
-    assert response.status == 404
+    assert response.status == HTTPStatus.NOT_FOUND
     assert response.body["detail"] == "genre not found"
