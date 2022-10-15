@@ -9,6 +9,7 @@ from src.services.films import FilmService, get_film_service
 
 from fastapi_pagination import Page, add_pagination, paginate
 
+from src.api.v1.check_auth import auth_required
 
 router = APIRouter()
 
@@ -96,6 +97,7 @@ class FilterGenres(EnumStrMixin):
     response_description="Список фильмов, параметры сортировки, "
     "количество фильмов на странице, номер страницы",
 )
+@auth_required
 async def get_all_films(
     sort: Optional[SortTypes] = None,
     filter: Optional[FilterGenres] = None,
